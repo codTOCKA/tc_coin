@@ -1,3 +1,6 @@
+const SUPABASE_URL = "svefudrwwzcrxniktfis";
+const SUPABASE_KEY = "sb_secret_07CdZ9wbu_pwZwF-kSbCTw_jOEImVVI";
+
 let tg = window.Telegram?.WebApp;
 if (tg) tg.expand();
 
