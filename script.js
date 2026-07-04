@@ -154,3 +154,16 @@ function claimDaily() {
 
   alert("Daily reward claimed!");
 }
+
+let referral = new URLSearchParams(window.location.search).get("ref");
+
+if (referral && referral !== userId) {
+  let bonus = 30;
+
+  score += bonus;
+  save();
+}
+
+function getReferralLink() {
+  return window.location.origin + "?ref=" + userId;
+}
