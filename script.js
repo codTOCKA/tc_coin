@@ -1,3 +1,5 @@
+let lastTapTime = 0;
+
 const SUPABASE_URL = "svefudrwwzcrxniktfis";
 const SUPABASE_KEY = "sb_secret_07CdZ9wbu_pwZwF-kSbCTw_jOEImVVI";
 
@@ -43,13 +45,22 @@ try {
 }
 
 function tapCoin() {
+function tapCoin() {
   if (energy <= 0) return;
+
+  const now = Date.now();
+
+  // جلوگیری از اسپم (200ms فاصله)
+  if (now - lastTapTime < 200) return;
+
+  lastTapTime = now;
 
   score += power;
   energy -= 1;
 
   save();
   render();
+}
 }
 }
 
