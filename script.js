@@ -61,9 +61,11 @@ function upgrade() {
 }
 
 function save() {
-  try {
-    localStorage.setItem("tca_score_" + userId, score);
-    localStorage.setItem("tca_power_" + userId, power);
+  localStorage.setItem("tca_score_" + userId, score);
+  localStorage.setItem("tca_power_" + userId, power);
+
+  saveOnline(); // 👈 اضافه شد
+}
   } catch (e) {}
 }
 
