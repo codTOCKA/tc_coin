@@ -87,3 +87,33 @@ setInterval(() => {
     render();
   }
 }, 1000);
+
+async function loadLeaderboard() {
+  const res = await fetch(SUPABASE_URL + "/rest/v1/users?select=*&order=score.desc&limit=10", {
+    method: "GET",
+    headers: {
+      apikey: SUPABASE_KEY,
+      Authorization: "Bearer " + SUPABASE_KEY
+    }
+  });
+
+  const data = await res.json();
+  renderLeaderboard(data);
+}
+
+function renderLeaderboard(data) {
+  const box = document.getElementById("leaderboard");
+  if (!box) return;
+
+  box.innerHTML = "";
+
+  data.forEach((u, i) => {
+    const div = document.createElement("div");
+    div.className = "lb-item";
+    div.innerText = `${i + 1}. ${u.id} - ${u.score} TCA`;
+    box.appendChild(div);
+  });
+}
+
+setInterval(loadLeaderboard, 5000);
+loadLeaderboard();
