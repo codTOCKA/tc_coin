@@ -1,41 +1,49 @@
 let tg = window.Telegram?.WebApp;
 if (tg) tg.expand();
 
-let userId = tg?.initDataUnsafe?.user?.id || "guest";
+let userId = tg?.initDataUnsafe?.user?.id;
+if (!userId) userId = "guest";
 
-// load data
-let score = parseInt(localStorage.getItem("tca_score_" + userId)) || 0;
-let power = parseInt(localStorage.getItem("tca_power_" + userId)) || 1;
+let score = 0;
+let power = 1;
 
-document.getElementById("score").innerText = score;
+// safe load
+try {
+  score = parseInt(localStorage.getItem("tca_score_" + userId)) || 0;
+  power = parseInt(localStorage.getItem("tca_power_" + userId)) || 1;
+} catch (e) {
+  score = 0;
+  power = 1;
+}
 
-// tap
 function tapCoin() {
   score += power;
   save();
   render();
 }
 
-// upgrade
 function upgrade() {
   if (score >= 100) {
     score -= 100;
-    power += 1;
+    power++;
     save();
     render();
-    alert("Upgraded! Power: " + power);
   } else {
     alert("Not enough TCA");
   }
 }
 
-// save
 function save() {
-  localStorage.setItem("tca_score_" + userId, score);
-  localStorage.setItem("tca_power_" + userId, power);
+  try {
+    localStorage.setItem("tca_score_" + userId, score);
+    localStorage.setItem("tca_power_" + userId, power);
+  } catch (e) {}
 }
 
-// render
 function render() {
-  document.getElementById("score").innerText = score;
+  const el = document.getElementById("score");
+  if (el) el.innerText = score;
 }
+
+// init
+render();
