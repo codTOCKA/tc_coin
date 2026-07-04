@@ -1,43 +1,41 @@
-let tg = window.Telegram.WebApp;
-tg.expand();
+let tg = window.Telegram?.WebApp;
+if (tg) tg.expand();
 
-let user = tg.initDataUnsafe?.user;
+let userId = tg?.initDataUnsafe?.user?.id || "guest";
 
-let userId = user?.id || "guest";
-
-let score = 0;
-let power = 1;
-
-// load saved data
-if (localStorage.getItem("tca_score_" + userId) {
-  score = parseInt(localStorage.getItem("tca_score"));
-}
-
-if (localStorage.setItem("tca_power_" + userId, power); {
-  power = parseInt(localStorage.getItem("tca_power"));
-}
+// load data
+let score = parseInt(localStorage.getItem("tca_score_" + userId)) || 0;
+let power = parseInt(localStorage.getItem("tca_power_" + userId)) || 1;
 
 document.getElementById("score").innerText = score;
 
+// tap
 function tapCoin() {
   score += power;
-  document.getElementById("score").innerText = score;
-
-  localStorage.setItem("tca_score", score);
+  save();
+  render();
 }
 
-// upgrade system (simple)
+// upgrade
 function upgrade() {
   if (score >= 100) {
     score -= 100;
     power += 1;
-
-    localStorage.setItem("tca_score", score);
-    localStorage.setItem("tca_power", power);
-
-    document.getElementById("score").innerText = score;
+    save();
+    render();
     alert("Upgraded! Power: " + power);
   } else {
     alert("Not enough TCA");
   }
+}
+
+// save
+function save() {
+  localStorage.setItem("tca_score_" + userId, score);
+  localStorage.setItem("tca_power_" + userId, power);
+}
+
+// render
+function render() {
+  document.getElementById("score").innerText = score;
 }
