@@ -7,6 +7,9 @@ if (!userId) userId = "guest";
 let score = 0;
 let power = 1;
 
+let energy = 100;
+let maxEnergy = 100;
+
 // safe load
 try {
   score = parseInt(localStorage.getItem("tca_score_" + userId)) || 0;
@@ -17,9 +20,14 @@ try {
 }
 
 function tapCoin() {
+  if (energy <= 0) return;
+
   score += power;
+  energy -= 1;
+
   save();
   render();
+}
 }
 
 function upgrade() {
@@ -41,9 +49,20 @@ function save() {
 }
 
 function render() {
-  const el = document.getElementById("score");
-  if (el) el.innerText = score;
+  document.getElementById("score").innerText = score;
+
+  let energyEl = document.getElementById("energy");
+  if (energyEl) {
+    energyEl.innerText = energy + " / " + maxEnergy;
+  }
+}
 }
 
 // init
 render();
+setInterval(() => {
+  if (energy < maxEnergy) {
+    energy += 1;
+    render();
+  }
+}, 1000);
