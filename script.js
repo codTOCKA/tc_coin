@@ -9,11 +9,11 @@ let score = 0;
 let power = 1;
 
 // load saved data
-if (localStorage.getItem("tca_score")) {
+if (localStorage.getItem("tca_score_" + userId) {
   score = parseInt(localStorage.getItem("tca_score"));
 }
 
-if (localStorage.getItem("tca_power")) {
+if (localStorage.setItem("tca_power_" + userId, power); {
   power = parseInt(localStorage.getItem("tca_power"));
 }
 
