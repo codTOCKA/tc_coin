@@ -1,3 +1,10 @@
+let tg = window.Telegram?.WebApp;
+
+if (tg) {
+  tg.ready();
+  tg.expand();
+}
+
 let lastTapTime = 0;
 
 const SUPABASE_URL = "svefudrwwzcrxniktfis";
@@ -22,7 +29,10 @@ async function saveOnline() {
 let tg = window.Telegram?.WebApp;
 tg?.expand();
 
-let userId = tg?.initDataUnsafe?.user?.id;
+let userId =
+  tg?.initDataUnsafe?.user?.id ||
+  new URLSearchParams(window.location.search).get("ref") ||
+  "guest";
 
 if (!userId) {
   userId = "guest_" + Math.random();
