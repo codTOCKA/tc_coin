@@ -167,3 +167,10 @@ if (referral && referral !== userId) {
 function getReferralLink() {
   return window.location.origin + "?ref=" + userId;
 }
+
+
+function copyRef() {
+  const link = getReferralLink();
+  navigator.clipboard.writeText(link);
+  alert("Referral link copied");
+}
