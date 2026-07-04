@@ -121,3 +121,25 @@ function renderLeaderboard(data) {
 
 setInterval(loadLeaderboard, 5000);
 loadLeaderboard();
+
+
+let lastClaim = localStorage.getItem("tca_daily_" + userId);
+
+
+function claimDaily() {
+  const today = new Date().toDateString();
+
+  if (lastClaim === today) {
+    alert("Already claimed today");
+    return;
+  }
+
+  score += 50; // جایزه روزانه
+  lastClaim = today;
+
+  localStorage.setItem("tca_daily_" + userId, today);
+  save();
+  render();
+
+  alert("Daily reward claimed!");
+}
