@@ -18,16 +18,20 @@ async function saveOnline() {
 }
 
 let tg = window.Telegram?.WebApp;
-if (tg) tg.expand();
+tg?.expand();
 
 let userId = tg?.initDataUnsafe?.user?.id;
-if (!userId) userId = "guest";
 
+if (!userId) {
+  userId = "guest_" + Math.random();
+}
 let score = 0;
 let power = 1;
 
 let energy = 100;
 let maxEnergy = 100;
+
+let username = tg?.initDataUnsafe?.user?.username || "unknown";
 
 // safe load
 try {
