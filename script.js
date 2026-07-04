@@ -1,3 +1,10 @@
+let tg = window.Telegram.WebApp;
+tg.expand();
+
+let user = tg.initDataUnsafe?.user;
+
+let userId = user?.id || "guest";
+
 let score = 0;
 let power = 1;
 
