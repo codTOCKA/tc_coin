@@ -1,6 +1,22 @@
 const SUPABASE_URL = "svefudrwwzcrxniktfis";
 const SUPABASE_KEY = "sb_secret_07CdZ9wbu_pwZwF-kSbCTw_jOEImVVI";
 
+async function saveOnline() {
+  await fetch(SUPABASE_URL + "/rest/v1/users", {
+    method: "POST",
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Content-Type": "application/json",
+      "Prefer": "resolution=merge-duplicates"
+    },
+    body: JSON.stringify({
+      id: userId,
+      score: score,
+      power: power
+    })
+  });
+}
+
 let tg = window.Telegram?.WebApp;
 if (tg) tg.expand();
 
